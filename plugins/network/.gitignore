@@ -1,0 +1,8 @@
+/commands
+/subcommands/*
+/triggers/*
+/network-*
+/install
+/post-create
+/post-delete
+/report

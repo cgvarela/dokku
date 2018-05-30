@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$PLUGIN_AVAILABLE_PATH/config/functions"
+
+dokku_run_cmd() {
+  declare desc="runs command in container based on app image"
+  declare cmd="run" APP="$2"
+  verify_app_name "$APP"
+  shift 2
+
+  local DOKKU_SCHEDULER=$(config_get "$APP" DOKKU_SCHEDULER || echo "docker-local")
+  plugn trigger scheduler-run "$DOKKU_SCHEDULER" "$APP" "$@"
+}
+
+dokku_run_cmd "$@"
